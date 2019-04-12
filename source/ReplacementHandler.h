@@ -1,16 +1,19 @@
 #ifndef REPLACEMENT_H
 #define REPLACEMENT_H
 #include "IReplacementHandler.h"
+#include <cstdint>
 #include <cstddef>
+
+#define numberOfAddressBits 16 
 
 
 enum PoliciesOffered { PLRU, LFU };
 
 class ReplacementHandler : public IReplacementPolicy {
 public:
-    ReplacementHandler(unsigned char numberOfAddressBits,unsigned char numberOfIndexBits, unsigned char numberOfOffsetBits, unsigned char nWayAssociative, PoliciesOffered policy);
-	unsigned char findVictim(unsigned short address);
-	void notifyOperation(unsigned short address, unsigned char cacheColumn);
+    ReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits,uint8_t nWayAssociative, PoliciesOffered policy);
+	uint8_t findVictim(uint16_t address);
+	void notifyOperation(uint16_t address, uint8_t cacheColumn);
 
 private:
 	PoliciesOffered _policy;
