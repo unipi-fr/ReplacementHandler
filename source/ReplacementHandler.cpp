@@ -6,25 +6,6 @@
 #include <iostream>
 using namespace std;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class PLRUReplacementHandler : public IReplacementPolicy {
 private:
 	unsigned char* _dataStructure;
