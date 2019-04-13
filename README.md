@@ -32,9 +32,8 @@ In order to work properly, the data structures must be initialized by the only c
 * ```numberOfIndexBits``` Number of index bits
 * ```numberOfOffsetBits``` Number of offset bits
 * ```nWayAssociative``` Level of assocety
-* ```policy``` La politica da adottare
-Le politiche disponibili sono accessibili attraverso l’enumerato 
-      ```enum PoliciesOffered { PLRU, LFU };```
+* ```policy``` The policy chosen
+The available policies are accessible by the enumerator ```enum PoliciesOffered { PLRU, LFU };```
 
 Our class implements IReplacementPolicy and consequently it realize the methods described in the interface.
 
