@@ -1,0 +1,2 @@
+test1: simple_test.c
+	gcc --static simple_test.c -L /usr/local/lib/ -lcunit -o $<

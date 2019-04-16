@@ -3,17 +3,17 @@
 #include "IReplacementHandler.h"
 #include <cstdint>
 #include <cstddef>
-
+#include <stdlib.h>
 #define numberOfAddressBits 16 
 
 
-enum PoliciesOffered { PLRU, LFU };
+enum PoliciesOffered { PLRU, LFU, RND };
 
 class ReplacementHandler : public IReplacementPolicy {
 public:
     ReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits,uint8_t nWayAssociative, PoliciesOffered policy);
 	uint8_t findVictim(uint16_t address);
-	void notifyOperation(uint16_t address, uint8_t cacheColumn);
+	void updateStatistics(uint16_t address, uint8_t cacheColumn,  bool newData);
 
 private:
 	PoliciesOffered _policy;
