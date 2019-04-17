@@ -130,18 +130,25 @@ public:
 		return vict;
 	}
 
-	void updateStatistics(uint16_t address, uint8_t cacheColumn, bool newData){
+	void updateStatistics(uint16_t address, uint8_t cacheColumn){
 		
 		uint16_t 	mask 	= pow(2, index_size) - 1;			//maschera per l'operazione di shift destro 
 		uint8_t 	index 	= (address >> offset_size) & mask;	//derivo il valore corretto dalla combinazione algebrica del registro a 16bit		
 
-		if(newData)												//newData distingue se è un nuovo dato in cache
+		/*if(newData)												//newData distingue se è un nuovo dato in cache
 			ass_m[index * n_ways + cacheColumn] = 1;			//Setting del contatore a 1, primo accesso
-
-		else
-			ass_m[index * n_ways + cacheColumn]++;				//incremento del contatore
+		
+		else*/
+		ass_m[index * n_ways + cacheColumn]++;				//incremento del contatore
 
 		print_debug(ASSOCIATIVE_MATRIX);
+	}
+
+	void invalidateStatistics(uint16_t address, uint8_t cacheColumn){
+		uint16_t 	mask 	= pow(2, index_size) - 1;			//maschera per l'operazione di shift destro 
+		uint8_t 	index 	= (address >> offset_size) & mask;	//derivo il valore corretto dalla combinazione algebrica del registro a 16bit		
+
+		ass_m[index * n_ways + cacheColumn] = 0;				//resetta il contatore della pagina
 	}
 };
 

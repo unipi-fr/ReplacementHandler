@@ -13,7 +13,8 @@ class ReplacementHandler : public IReplacementPolicy {
 public:
     ReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits,uint8_t nWayAssociative, PoliciesOffered policy);
 	uint8_t findVictim(uint16_t address);
-	void updateStatistics(uint16_t address, uint8_t cacheColumn,  bool newData);
+	void updateStatistics(uint16_t address, uint8_t cacheColumn);
+	void invalidateStatistics(uint16_t address, uint8_t cacheColumn);
 
 private:
 	PoliciesOffered _policy;
