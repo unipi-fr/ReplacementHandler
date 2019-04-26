@@ -51,7 +51,7 @@ private:
 	uint8_t  	offset_size;
 	uint8_t  	n_ways;				// numero di vie della cache associativa
 	uint8_t   	n_rows;				// numero degli indici
-
+	uint16_t	last_incremented	// ultimo elemento incrementato. usato per evitare incrementi sequenziali continuativi
 
 	/*Parametri di DEBUG*/
 	enum debug_par{	ASSOCIATIVE_MATRIX, 
@@ -88,11 +88,11 @@ public:
     LFUReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits, uint8_t nWayAssociative){
 
     	/*Inizializzazione dei parametri della classe*/
-		n_rows      = pow(2, numberOfIndexBits);
-		n_ways      = nWayAssociative;
-		index_size  = numberOfIndexBits;
-		offset_size = numberOfOffsetBits;
-
+		n_rows      	 = pow(2, numberOfIndexBits);
+		n_ways      	 = nWayAssociative;
+		index_size  	 = numberOfIndexBits;
+		offset_size 	 = numberOfOffsetBits;
+		last_incremented = -1;
 
 		ass_m = new uint8_t[n_ways * n_rows];			//creazione dinamica matrice associativa [rows][numero di vie]
     	memset(ass_m, '0', n_rows * nWayAssociative); 	//mette a 0 tutte le celle della matrice associativa
@@ -139,7 +139,12 @@ public:
 			ass_m[index * n_ways + cacheColumn] = 1;			//Setting del contatore a 1, primo accesso
 		
 		else*/
-		ass_m[index * n_ways + cacheColumn]++;				//incremento del contatore
+		
+
+		if(ass_m[index * n_ways + cacheColumn] < 255 && ((index * n_ways + cacheColumn) != last_incremented)) {
+			ass_m[index * n_ways + cacheColumn]++;				//incremento del contatore
+			last_incremented = index * n_ways + cacheColumn;
+		}
 
 		print_debug(ASSOCIATIVE_MATRIX);
 	}
@@ -196,8 +201,12 @@ unsigned char ReplacementHandler::findVictim(uint16_t address) {
 	return _policyAdopted->findVictim(address);
 }
 
-void ReplacementHandler::updateStatistics(uint16_t address, uint8_t cacheColumn, bool newData){
-	_policyAdopted->updateStatistics(address,cacheColumn, newData);
+void ReplacementHandler::updateStatistics(uint16_t address, uint8_t cacheColumn){
+	_policyAdopted->updateStatistics(address,cacheColumn);
+}
+
+void ReplacementHandler::invalidateStatistics(uint16_t address, uint8_t cacheColumn){
+	_policyAdopted->invalidateStatistics(address,cacheColumn);
 }
 
 
