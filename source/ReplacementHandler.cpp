@@ -9,37 +9,103 @@
 
 using namespace std;
 
+
+
 class PLRUReplacementHandler : public IReplacementPolicy {
 private:
-	unsigned char* _dataStructure;
-	size_t _sizeDataStructure;
+    uint16_t* _dataStructure;
+    size_t _sizeDataStructure;
+    uint8_t _nWayAssociative;
+    uint8_t _numberOfOffsetBits;
+    uint16_t _addressMaskOfIndex;
+    
+	uint16_t extractIndex(uint16_t address){
+        uint16_t index = address & _addressMaskOfIndex;
+        index = index >> _numberOfOffsetBits;
+        return index;
+    }
+    
+    void createMask(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits){
+        _numberOfOffsetBits = numberOfOffsetBits;
+        _addressMaskOfIndex = 0;// inizializza con tutti 0
+		for(int i = 0;i<numberOfIndexBits;++i){
+			_addressMaskOfIndex <<= 1;
+			++_addressMaskOfIndex;
+		}
+		_addressMaskOfIndex <<= _numberOfOffsetBits;     
+    }
 public:
     PLRUReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits, uint8_t nWayAssociative){
-		if(numberOfIndexBits > UCHAR_MAX - numberOfOffsetBits){
-		//TODO: gestire errore overflow della somma 
-		return;
-	}
-	if (numberOfAddressBits <= numberOfIndexBits + numberOfOffsetBits) {
-		//TODO: gestire errore "il numero dei bit offset+index supera i bit dell'indirizzo"
-		//Se  numberOfAdressBits = alpha + beta + gamma --> ne consegue che questo if è sempre verificato dato che 
-		//la somma di due qualsiasi delle componenti sarà sempre minore della somma di tutte e tre
-		return;
-	}
-	_sizeDataStructure = pow(2, numberOfIndexBits);
-	_dataStructure = new unsigned char[_sizeDataStructure];
-	}
+		if(nWayAssociative>16){
+			throw nWayException();
+		}
+        if(numberOfIndexBits > UCHAR_MAX - numberOfOffsetBits){
+            //TODO: gestire errore overflow della somma 
+            return;
+        }
+        if (numberOfAddressBits <= numberOfIndexBits + numberOfOffsetBits) {
+            //TODO: gestire errore "il numero dei bit offset+index supera i bit dell'indirizzo"
+            //Se  numberOfAdressBits = alpha + beta + gamma --> ne consegue che questo if è sempre verificato dato che 
+            //la somma di due qualsiasi delle componenti sarà sempre minore della somma di tutte e tre
+            return;
+        }
+    
+        createMask(numberOfIndexBits, numberOfOffsetBits);
+        _nWayAssociative = nWayAssociative;
+        _sizeDataStructure = pow(2, numberOfIndexBits);
+        _dataStructure = new uint16_t[_sizeDataStructure];
+    }
 
-	uint8_t findVictim(unsigned short address){
-		//TODO: Insert Code here
-		return 0;
-	}
+    uint8_t findVictim(uint16_t address){
+        uint16_t index = extractIndex(address);
+       
+        uint16_t counter = ~(_dataStructure[index]);
+        
+        uint8_t cc = 0;
+        int i = 0;
+        
+        for(uint8_t n = _nWayAssociative/2; n > 0; n /= 2){
+            uint16_t bit = counter & (1u << i);
+            
+            if(bit > 0) {
+                cc += n;
+                i += n;    
+            } else {
+                i += 1;
+            }                
+        }
+        
+        return cc;
+    }  
 
-	void updateStatistics(unsigned short address, uint8_t cacheColumn){
-		//TODO: Insert code here
-	}
+    void updateStatistics(uint16_t address, uint8_t cacheColumn){
+        //TODO: Insert code here
+        
+        uint16_t index = extractIndex(address);
+		uint16_t counter = _dataStructure[index];
+        
+        int i = 0;
+        uint8_t cc = cacheColumn;
+        
+        for(uint8_t n = _nWayAssociative/2; n > 0; n /= 2){
+            
+            if(cc >= n) 
+            {
+                //E' un 1
+                counter |= (1u << i); // Setto il bit corrispondente
+                i += n;
+                cc -= n;
+            } else {
+                //E' uno 0
+                counter &= ~(1u << i); // Azzero il bit corrispondente
+                i += 1;
+            }
+               
+        }
+		_dataStructure[index] = counter;
+    }
 
-	void invalidateStatistics(uint16_t address, uint8_t cacheColumn){
-	}
+    void invalidateStatistics(uint16_t address, uint8_t cacheColumn){}
 };
 
 class LFUReplacementHandler : public IReplacementPolicy {
@@ -209,5 +275,3 @@ void ReplacementHandler::updateStatistics(uint16_t address, uint8_t cacheColumn)
 void ReplacementHandler::invalidateStatistics(uint16_t address, uint8_t cacheColumn){
 	_policyAdopted->invalidateStatistics(address,cacheColumn);
 }
-
-

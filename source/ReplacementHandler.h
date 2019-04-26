@@ -1,6 +1,7 @@
 #ifndef REPLACEMENT_H
 #define REPLACEMENT_H
 #include "IReplacementHandler.h"
+#include "ReplacementHandlerExceptions.h"
 #include <cstdint>
 #include <cstddef>
 #include <stdlib.h>
