@@ -5,11 +5,21 @@
 using namespace std;
 
 void test_PLRU(){
-	ReplacementHandler* h = new ReplacementHandler ((unsigned char)3,(unsigned char)1,(unsigned char)4,PLRU);
-    unsigned char a;
-    a = h->findVictim(12);
-    cout << "Hello World!\n"; 
-    cout << "Call find victim -> "<<(int)a<<endl; 
+	try
+	{
+		ReplacementHandler* h = new ReplacementHandler ((unsigned char)3,(unsigned char)1,(unsigned char)17,PLRU);
+		unsigned char a;
+		h->updateStatistics(12,3);
+		h->updateStatistics(12,2);
+		h->updateStatistics(12,1);
+		a = h->findVictim(12);
+		cout << "Hello World!\n"; 
+		cout << "Call find victim -> "<<(int)a<<endl; 
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}  
 }
 
 
@@ -33,10 +43,10 @@ void test_RND(){
 
 int main()
 {
-	//test_PLRU();
+	test_PLRU();
 	//cout << endl;
 	//test_LFU();
-	test_RND();
+	//test_RND();
 	return 0;
 }
 
