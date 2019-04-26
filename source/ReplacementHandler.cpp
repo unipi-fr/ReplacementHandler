@@ -4,16 +4,11 @@
 #include <cstring>
 #include <cstdint>
 #include <iostream>
-<<<<<<< HEAD
+
 #include <time.h>
 
 using namespace std;
 
-
-=======
-using namespace std;
-
->>>>>>> master
 class PLRUReplacementHandler : public IReplacementPolicy {
 private:
 	unsigned char* _dataStructure;
@@ -39,8 +34,11 @@ public:
 		return 0;
 	}
 
-	void updateStatistics(unsigned short address, uint8_t cacheColumn, bool newData){
+	void updateStatistics(unsigned short address, uint8_t cacheColumn){
 		//TODO: Insert code here
+	}
+
+	void invalidateStatistics(uint16_t address, uint8_t cacheColumn){
 	}
 };
 
@@ -51,7 +49,7 @@ private:
 	uint8_t  	offset_size;
 	uint8_t  	n_ways;				// numero di vie della cache associativa
 	uint8_t   	n_rows;				// numero degli indici
-	uint16_t	last_incremented	// ultimo elemento incrementato. usato per evitare incrementi sequenziali continuativi
+	uint16_t	last_incremented;	// ultimo elemento incrementato. usato per evitare incrementi sequenziali continuativi
 
 	/*Parametri di DEBUG*/
 	enum debug_par{	ASSOCIATIVE_MATRIX, 
@@ -171,7 +169,10 @@ public:
 		return rand() % n_ways;					//ritorna un valore randomico tra 0 e n_ways-1
 	}
 
-	void updateStatistics(unsigned short address, uint8_t cacheColumn, bool newData){
+	void updateStatistics(unsigned short address, uint8_t cacheColumn){
+	}
+
+	void invalidateStatistics(uint16_t address, uint8_t cacheColumn){
 	}
 };
 

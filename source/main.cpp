@@ -18,7 +18,7 @@ void test_LFU(){
     unsigned char a;
     a = h->findVictim(12);
     cout << endl;
-    h->updateStatistics(12, a, false);
+    h->updateStatistics(12, a);
     cout << "Hello World!\n"; 
     cout << "Call find victim -> "<<(int)a<<endl;     
 }
