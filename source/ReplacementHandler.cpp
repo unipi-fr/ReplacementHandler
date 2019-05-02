@@ -161,14 +161,14 @@ public:
 		ass_m = new uint8_t[n_ways * n_rows];			//creazione dinamica matrice associativa [rows][numero di vie]
     	memset(ass_m, '0', n_rows * nWayAssociative); 	//mette a 0 tutte le celle della matrice associativa
 		
-		/* INIZIALIZZAZIONE RANDOMICA
-
+		 //INIZIALIZZAZIONE RANDOMICA
+    	srand(time(NULL));
 		for(uint8_t i = 0; i < n_rows; i++){
 			for (uint8_t j = 0; j < n_ways; j++)
 			{
 				ass_m[i * n_ways + j] = (rand() % 255 + 1);
 			}		
-		}*/
+		}
 	}
 
 	/* Qua facciamo in modo che passato un indirizzo si analizza l' indice derivato dall' indirizzo *
