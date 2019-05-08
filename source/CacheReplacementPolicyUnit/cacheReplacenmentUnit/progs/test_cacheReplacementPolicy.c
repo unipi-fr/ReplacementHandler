@@ -155,6 +155,43 @@ uint8_t expected_updated_statistic_5[64] = { 238,  95, 248,  66,  14,  94,  84, 
 
 
 
+uint8_t expected_invalidated_statistic_1[64] = {   0,   0,  0,   0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 36,
+                                                 111, 126, 97, 119, 221, 163, 134, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0,
+                                                   0,   0,  0,   0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0,
+                                                   0,   0,  0,   0,   0,   0,   0, 0, 0, 0, 0, 0, 0 
+                                               };
+
+
+
+uint8_t expected_invalidated_statistic_2[64] = {   0,   0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 240, 211, 17, 
+                                                 140, 125, 144, 174, 107, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0,  0,
+                                                   0,   0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0,  0,
+                                                   0,   0,   0,   0,   0, 0, 0 
+                                               };
+
+
+uint8_t expected_invalidated_statistic_3[64] = {   0,  0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 109, 218,  50, 128, 184,
+                                                 142, 43, 206, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0,   0,   0,   0,
+                                                   0,  0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0,   0,   0,   0,  0  
+                                               };
+
+
+uint8_t expected_invalidated_statistic_4[64] = {   0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 167, 75, 10, 179, 34, 175,
+                                                 233, 163, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,  0,  0,   0,  0,   0,
+                                                   0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0, 0, 0
+                                               };
+
+
+
+uint8_t expected_invalidated_statistic_5[64] = {   0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 108, 122, 48, 51, 215, 214,
+                                                 194, 86, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0,  0,  0,   0,   0,
+                                                   0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   0,   0,  0, 0 
+                                               };
+
+
+
+
+
 uint16_t address_hex[64] = {  0x7164, 0x1c4e, 0x30da, 0xdfd, 0x6738, 0x1c3, 0x4601, 0x3875, 0xee6e, 0x3d4b, 0x2281, 0x13e1, 
                           0xbd65, 0x323d, 0xef5e, 0x1f55, 0xe810, 0x84df, 0x5221, 0xb31f, 0x1d32, 0x572e, 0x2e21, 0x3ae7, 
                           0xa153, 0x6194, 0xc87e, 0x6af6, 0xce38, 0x77de, 0x4d3c, 0xbf9d, 0x142c, 0x7e17, 0xcd9a, 0x7b64, 
@@ -273,9 +310,56 @@ void test_updateStatistics(void){
     }
           
 
+    //ripristino i valori uguali a quelli iniziali per usare i vettori "copy" in altri test 
+    for(int i = 0; i < 64; i++){
+        model_1_copy[i] = model_1[i];   
+        model_2_copy[i] = model_2[i];   
+        model_3_copy[i] = model_3[i];   
+        model_4_copy[i] = model_4[i];   
+        model_5_copy[i] = model_5[i];   
+  
+    }
+
+
+
 
 }
 
+
+
+
+void test_invalidateStatistics(void){
+
+    for(int i = 0; i < INVALIDATE_UB; i++){
+      for(int k = 0; k < 8; k++){
+          invalidateStatistics(address_dec[i], k, model_1_copy);
+          invalidateStatistics(address_dec[i], k, model_2_copy);
+          invalidateStatistics(address_dec[i], k, model_3_copy);
+          invalidateStatistics(address_dec[i], k, model_4_copy);
+          invalidateStatistics(address_dec[i], k, model_5_copy);
+      }
+    }
+
+    for(int i = 0; i < 64; i++){
+        CU_ASSERT_EQUAL(model_1_copy[i], expected_invalidated_statistic_1[i]);  
+        CU_ASSERT_EQUAL(model_2_copy[i], expected_invalidated_statistic_2[i]); 
+        CU_ASSERT_EQUAL(model_3_copy[i], expected_invalidated_statistic_3[i]);  
+        CU_ASSERT_EQUAL(model_4_copy[i], expected_invalidated_statistic_4[i]); 
+        CU_ASSERT_EQUAL(model_5_copy[i], expected_invalidated_statistic_5[i]);     
+    }    
+
+
+}
+
+
+
+void test_randomPolicy(void){
+
+  for(int i = 0; i< MAX_RANDOM_TEST; i++){
+    CU_ASSERT_TRUE(randomPolicy() < MAX_CACHE_ELEMENTS);
+  }
+
+}
 
 
 
@@ -315,8 +399,14 @@ int main()
       CU_cleanup_registry();
       return CU_get_error();
     }
-
-
+    if (NULL == CU_add_test(pSuite, "test of invalidation of statistics", test_invalidateStatistics)){
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+    if (NULL == CU_add_test(pSuite, "test of random policy", test_randomPolicy)){
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();

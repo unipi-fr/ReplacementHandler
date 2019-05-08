@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 
@@ -70,3 +72,10 @@ void invalidateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m)
 
 	ass_m[index * NWAYS_ASSOCIATIVE + cacheColumn] = 0;				//resetta il contatore della pagina
 };
+
+
+
+
+uint8_t randomPolicy(void){
+	return rand()%(MAX_CACHE_ELEMENTS - 1);
+}
