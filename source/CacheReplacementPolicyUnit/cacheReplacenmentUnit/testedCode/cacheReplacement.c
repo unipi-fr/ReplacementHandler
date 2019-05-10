@@ -77,5 +77,5 @@ void invalidateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m)
 
 
 uint8_t randomPolicy(void){
-	return rand()%(MAX_CACHE_ELEMENTS - 1);
+	return rand()%(NWAYS_ASSOCIATIVE - 1);
 }

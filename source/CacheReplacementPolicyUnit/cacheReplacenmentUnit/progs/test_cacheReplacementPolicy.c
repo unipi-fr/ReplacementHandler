@@ -356,7 +356,7 @@ void test_invalidateStatistics(void){
 void test_randomPolicy(void){
 
   for(int i = 0; i< MAX_RANDOM_TEST; i++){
-    CU_ASSERT_TRUE(randomPolicy() < MAX_CACHE_ELEMENTS);
+    CU_ASSERT_TRUE(randomPolicy() < NWAYS_ASSOCIATIVE);
   }
 
 }
