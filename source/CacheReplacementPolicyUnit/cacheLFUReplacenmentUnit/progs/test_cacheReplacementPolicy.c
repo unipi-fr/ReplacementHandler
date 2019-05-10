@@ -3,8 +3,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
-#include </home/edoardo/Scrivania/CacheReplacementPolicyUnit/cacheReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Basic.h>
-#include </home/edoardo/Scrivania/CacheReplacementPolicyUnit/cacheReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Automated.h>
+//#include </home/edoardo/Scrivania/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Basic.h>
+//#include </home/edoardo/Scrivania/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Automated.h>
+#include </home/fraronk/repositories/replacementHandler/source/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Basic.h>
+#include </home/fraronk/repositories/replacementHandler/source/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Automated.h>
 #include "replacement.h"
 
 

@@ -13,7 +13,7 @@ using namespace std;
 
 class PLRUReplacementHandler : public IReplacementPolicy {
 private:
-    uint16_t* _dataStructure;
+    uint32_t* _dataStructure;
     size_t _sizeDataStructure;
     uint8_t _nWayAssociative;
     uint8_t _numberOfOffsetBits;
@@ -53,36 +53,36 @@ public:
         createMask(numberOfIndexBits, numberOfOffsetBits);
         _nWayAssociative = nWayAssociative;
         _sizeDataStructure = pow(2, numberOfIndexBits);
-        _dataStructure = new uint16_t[_sizeDataStructure];
+        _dataStructure = new uint32_t[_sizeDataStructure];
     }
 
     uint8_t findVictim(uint16_t address){
         uint16_t index = extractIndex(address);
        
-        uint16_t counter = ~(_dataStructure[index]);
+        uint32_t counter = ~(_dataStructure[index]);
         
-        uint8_t cc = 0;
+        uint8_t cacheColum = 0;
         int i = 0;
         
         for(uint8_t n = _nWayAssociative/2; n > 0; n /= 2){
-            uint16_t bit = counter & (1u << i);
+            uint32_t bit = counter & (1u << i);
             
             if(bit > 0) {
-                cc += n;
+                cacheColum += n;
                 i += n;    
             } else {
                 i += 1;
             }                
         }
         
-        return cc;
+        return cacheColum;
     }  
 
     void updateStatistics(uint16_t address, uint8_t cacheColumn){
         //TODO: Insert code here
         
         uint16_t index = extractIndex(address);
-		uint16_t counter = _dataStructure[index];
+		uint32_t counter = _dataStructure[index];
         
         int i = 0;
         uint8_t cc = cacheColumn;
