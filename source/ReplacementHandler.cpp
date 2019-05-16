@@ -36,7 +36,7 @@ private:
     }
 public:
     PLRUReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits, uint8_t nWayAssociative){
-		if(nWayAssociative>16){
+		if(nWayAssociative>32){
 			throw nWayException();
 		}
         if(numberOfIndexBits > UCHAR_MAX - numberOfOffsetBits){

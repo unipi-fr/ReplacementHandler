@@ -2,6 +2,7 @@
 #define REPLACEMENT_H
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 
 
@@ -25,14 +26,14 @@
 
 //PROTOTIPI
 
-uint8_t check_adress_index(uint16_t address);  //funzione che testa il corretto comportamento del meccanismo per trovare l'indice dall'indirizzo 
-uint8_t findVictim(uint16_t address, uint8_t *ass_m); //funzione che permette di selezionare la vittima con criterio LFU
+void initPLRU(uint32_t* dataStructure, size_t sizeDataStructure,uint8_t nWayAssociative, uint8_t numberOfOffsetBits, uint16_t addressMaskOfIndex);
+uint16_t createMask(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits);
+//uint8_t findVictim(uint16_t address, uint8_t *ass_m); //funzione che permette di selezionare la vittima con criterio LFU
 
 
-void updateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);
-void invalidateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);
+//void updateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);
+//void invalidateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);
 
-uint8_t randomPolicy(void);
 
 
 #endif
