@@ -79,8 +79,6 @@ public:
     }  
 
     void updateStatistics(uint16_t address, uint8_t cacheColumn){
-        //TODO: Insert code here
-        
         uint16_t index = extractIndex(address);
 		uint32_t counter = _dataStructure[index];
         
