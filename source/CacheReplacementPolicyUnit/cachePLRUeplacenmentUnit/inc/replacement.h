@@ -23,7 +23,6 @@ uint16_t createMask(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits);
 uint16_t extractIndex(uint16_t address);
 uint8_t findVictim(uint16_t address);//funzione che permette di selezionare la vittima con criterio LRU
 uint32_t updateStatistics(uint16_t address, uint8_t cacheColumn);
-//void updateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);
 //void invalidateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);
 
 #endif

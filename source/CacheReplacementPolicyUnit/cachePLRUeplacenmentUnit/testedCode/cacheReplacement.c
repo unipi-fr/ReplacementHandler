@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-uint32_t* _dataStructure = NULL;
+uint32_t _dataStructure[DATASTRUCTURE_SIZE];
 size_t _sizeDataStructure;
 uint8_t _nWayAssociative;
 uint8_t _numberOfOffsetBits;
@@ -13,10 +13,6 @@ uint16_t _addressMaskOfIndex;
 
 /*Just for testing*/
 void initPLRU(uint32_t* dataStructure, size_t sizeDataStructure,uint8_t nWayAssociative, uint8_t numberOfOffsetBits, uint16_t addressMaskOfIndex){
-    if(_dataStructure == NULL){
-        _dataStructure = malloc(sizeof(uint32_t)*sizeDataStructure);
-    }
-
     for (size_t i = 0; i < sizeDataStructure; i++)
     {
         _dataStructure[i] = dataStructure[i];

@@ -86,6 +86,14 @@ uint16_t address_dec[NUMBER_OF_ADDRESSES_TESTED] =
   3808, 45175, 49492, 51326
 };
 
+uint32_t mask_counter_8wayAssociative[]  = {
+  0b111 , 0b111 , 0b1011 , 0b1011 , 0b110001 , 0b110001 , 0b1010001 , 0b1010001
+};
+
+uint32_t counterValue_8wayAssociative[] = { 
+  0 ,  4 ,  2 ,  10 ,  1 ,  33 ,  17 ,  81
+};
+
 /* The suite initialization function.
  * Opens the temporary file used by the tests.
  * Returns zero on success, non-zero otherwise.
@@ -128,29 +136,34 @@ void test_extractIndex(void) {
 }
 
 void test_findVictim(void){
+  initPLRU(dataStructure, DATASTRUCTURE_SIZE, NWAYS_ASSOCIATIVE, ADDRESS_OFFSET, createMask(ADDRESS_INDEX_SIZE, ADDRESS_OFFSET));
+
   for(int i = 0;i < NUMBER_OF_ADDRESSES_TESTED; i++){
     /*
       test with 6 bit of index, and a 8-way associative cashe    
     */
-    initPLRU(dataStructure, DATASTRUCTURE_SIZE, NWAYS_ASSOCIATIVE, ADDRESS_OFFSET, createMask(ADDRESS_INDEX_SIZE, ADDRESS_OFFSET));
     uint16_t index = extractIndex(address_hex[i]);
     CU_ASSERT_EQUAL(findVictim(address_hex[i]),findVictim_expectedVictim[index]);
   }
 }
 
 void test_updateStatistics(void){
-    for(int i = 0;i < NUMBER_OF_ADDRESSES_TESTED; i++){
-    /*
-      test with 6 bit of index, and a 8-way associative cashe    
-    */
-    initPLRU(dataStructure, DATASTRUCTURE_SIZE, NWAYS_ASSOCIATIVE, ADDRESS_OFFSET, createMask(ADDRESS_INDEX_SIZE, ADDRESS_OFFSET));
+  initPLRU(dataStructure, DATASTRUCTURE_SIZE, NWAYS_ASSOCIATIVE, ADDRESS_OFFSET, createMask(ADDRESS_INDEX_SIZE, ADDRESS_OFFSET));
+  for(int i = 0;i < NUMBER_OF_ADDRESSES_TESTED; i++){
+    int randomCacheColumn = rand()%8;
+    uint16_t address = address_hex[i];
+    uint16_t index = extractIndex(address);
+    uint32_t counter_mask = mask_counter_8wayAssociative[randomCacheColumn];
+    uint32_t expected_counter = counterValue_8wayAssociative[randomCacheColumn];
+    uint32_t counter = updateStatistics(address, randomCacheColumn);
+    uint32_t interestedBitsCounter = counter & counter_mask;
 
-    //CU_ASSERT_EQUAL(updateStatistics(address_hex[i], i%8,),updateStatistics_expectedVector[i]);
+    CU_ASSERT_EQUAL(interestedBitsCounter, expected_counter);    
   }
 }
 
 void test_invalidateStatistics(void){
-
+  //INVALIDATESTATISTICS FOR PLRU DOES NOTHING
 }
 
 /* The main() function for setting up and running the tests.
