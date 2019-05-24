@@ -5,8 +5,8 @@
 #include <time.h>
 //#include </home/edoardo/Scrivania/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Basic.h>
 //#include </home/edoardo/Scrivania/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Automated.h>
-#include </home/fraronk/repositories/replacementHandler/source/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Basic.h>
-#include </home/fraronk/repositories/replacementHandler/source/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Automated.h>
+#include </home/jerry/Scrivania/Progetto_prete/ReplacementHandler/source/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Basic.h>
+#include </home/jerry/Scrivania/Progetto_prete/ReplacementHandler/source/CacheReplacementPolicyUnit/cacheLFUReplacenmentUnit/CUnit-2.1-0/CUnit/Headers/Automated.h>
 #include "replacement.h"
 
 

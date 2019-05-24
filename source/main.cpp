@@ -12,8 +12,7 @@ void test_PLRU(){
 		h->updateStatistics(12,3);
 		h->updateStatistics(12,2);
 		h->updateStatistics(12,1);
-		a = h->findVictim(12);
-		cout << "Hello World!\n"; 
+		a = h->findVictim(12); 
 		cout << "Call find victim -> "<<(int)a<<endl; 
 	}
 	catch(const std::exception& e)
@@ -28,8 +27,7 @@ void test_LFU(){
     unsigned char a;
     a = h->findVictim(12);
     cout << endl;
-    h->updateStatistics(12, a);
-    cout << "Hello World!\n"; 
+    h->updateStatistics(12, a); 
     cout << "Call find victim -> "<<(int)a<<endl;     
 }
 
@@ -37,7 +35,6 @@ void test_RND(){
 	ReplacementHandler* h = new ReplacementHandler (3,1,4,RND);
     unsigned char a;
     a = h->findVictim(12);
-    cout << "Hello World!\n"; 
     cout << "Call find victim -> "<<(int)a<<endl; 
 }
 
