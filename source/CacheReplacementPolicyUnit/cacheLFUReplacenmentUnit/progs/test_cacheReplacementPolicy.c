@@ -267,6 +267,13 @@ void test_findCorrectLine(void){
 	}
 }
 
+/* Test for findVictim;
+ * we verify that for 3 precise indexes, that is IDX_1, IDX_2, IDX_3 that respectively hold 3, 7, 0
+ * findVictim returns a different value than expected.
+ * Next, we verify that findVictim with the address arrays in input
+ * return the correct victim for all indexes.
+ */
+
 void test_findVictim(void){
   for(int i = 0; i < 64; i++){
 
@@ -287,7 +294,10 @@ void test_findVictim(void){
   }
 }
 
-
+/* Test for updateStatistics;
+ * initially for all 64 addresses of the address_dec arrays and for all 8 columns we call updateStatics().
+ * We therefore verify that now the 'model_x_copy' model matrix created by us corresponds to the expected one.
+ */
 
 void test_updateStatistics(void){
 
@@ -312,7 +322,7 @@ void test_updateStatistics(void){
     }
           
 
-    //ripristino i valori uguali a quelli iniziali per usare i vettori "copy" in altri test 
+    //restoring of the original values
     for(int i = 0; i < 64; i++){
         model_1_copy[i] = model_1[i];   
         model_2_copy[i] = model_2[i];   
@@ -328,7 +338,11 @@ void test_updateStatistics(void){
 }
 
 
-
+/* Test for invalidateStatistics;
+ * initially for 15 addresses of the address_dec arrays and for all 8 columns we call
+ * invalidateStatistics(). We therefore verify that now the model matrix 'model_x_copy'
+ * created by us corresponds to that expected only for those specific addresses
+ */
 
 void test_invalidateStatistics(void){
 
@@ -353,7 +367,9 @@ void test_invalidateStatistics(void){
 
 }
 
-
+/* Test for randomPolicy;
+ * the test verifies that randomPolicy actually returns a value less or equal to the number of ways
+ */
 
 void test_randomPolicy(void){
 
@@ -388,7 +404,7 @@ int main()
    }
 
    /* add the tests to the suite */
-   // NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() 
+
     if (NULL == CU_add_test(pSuite, "test of find expected line", test_findCorrectLine)){
       CU_cleanup_registry();
       return CU_get_error();
@@ -412,8 +428,7 @@ int main()
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
-   /*CU_set_output_filename("cunit.txt");
-   CU_automated_run_tests();*/
+
    CU_cleanup_registry();
    return CU_get_error();
 }

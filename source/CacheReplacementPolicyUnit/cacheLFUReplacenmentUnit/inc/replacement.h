@@ -7,26 +7,26 @@
 
 //DEFINIZIONI DA SPECIFICA
 
-#define ADDRESS_LEN               16  	//Lunghezza dell'indirizzo che ci viene passato fissato a 16 bit 
-#define COUNTER_SIZE              8  	//Ogni contatore nella matrice è a 8 bit 
-#define ADDRESS_OFFSET            3  	//definisco un parametro di offset per i test (è solo un esempio e può variare al momento della creazione effettiva dell'oggetto)
-#define ADDRESS_INDEX_SIZE        3  	//definisco un parametro di indice per i test (è solo un esempio e può variare al momento della creazione effettiva dell'oggetto)
-#define NWAYS_ASSOCIATIVE         8  	//Numero di vie della cache associativa
+#define ADDRESS_LEN               16  	// Fixed length bits of the address 
+#define COUNTER_SIZE              8  	// Every counter of the associated matrix to the cache it's on 8 bits 
+#define ADDRESS_OFFSET            3  	// Defining an offset parameter for testing (it is just an example and may vary)
+#define ADDRESS_INDEX_SIZE        3  	// Defining an offset parameter for testing (it is just an example and may vary)
+#define NWAYS_ASSOCIATIVE         8  	// Number of the ways of the set associative cache
 
-#define MIN_RAND				  1	    //valore minimo della generazione casuale
-#define MAX_RAND			 	  127	//valore casuale da aggiungere per falsare il valore aspettato dalla find victim 
-#define IDX_1 				 	  3		//indice del dato da falsare nel valore aspettato 
-#define IDX_2				      7     //indice del dato da falsare nel valore aspettato 
-#define IDX_3				      0     //indice del dato da falsare nel valore aspettato 
+#define MIN_RAND				  1	    // Min value of the random generation
+#define MAX_RAND			 	  127	// Random value to add in order to misrepresent the expected value of the function findvictim 
+#define IDX_1 				 	  3		// Index to the data to misrepresent 
+#define IDX_2				      7     // Index to the data to misrepresent 
+#define IDX_3				      0     // Index to the data to misrepresent 
 
-#define INVALIDATE_UB			  15	//numero di indirizzi da invalidare in invalidateStatistics()
-#define MAX_CACHE_ELEMENTS        64    //2^16 dato che gli indirizzi sono a 16 bit
+#define INVALIDATE_UB			  15	// Number of indexes to invalidate in the function invalidateStatistics()
+#define MAX_CACHE_ELEMENTS        64    // Max number of the cache elements
 #define MAX_RANDOM_TEST			  1024 
 
 //PROTOTIPI
 
-uint8_t check_adress_index(uint16_t address);  //funzione che testa il corretto comportamento del meccanismo per trovare l'indice dall'indirizzo 
-uint8_t findVictim(uint16_t address, uint8_t *ass_m); //funzione che permette di selezionare la vittima con criterio LFU
+uint8_t check_adress_index(uint16_t address);  		  //testing the behaviour of the mechanism to find the index starting from the address
+uint8_t findVictim(uint16_t address, uint8_t *ass_m); //finding the victim according to LFU policy
 
 
 void updateStatistics(uint16_t address, uint8_t cacheColumn, uint8_t *ass_m);

@@ -1,9 +1,9 @@
 /*ReplacementHandler.cpp	
-\details	ReplacementHandler contains the implementation of replacement policies
-*/
-/*
-\authors		Edoardo Cittadini, Davide Rasla, Gerlando Sciangula, Francesco Ronchieri, Alessandro Madonna
-\date		15-05-2019
+details:		ReplacementHandler contains the implementation of replacement policies
+
+authors:		Edoardo Cittadini, Davide Rasla, Gerlando Sciangula, Francesco Ronchieri, Alessandro Madonna
+
+date:			15-05-2019
 */	
 
 #include "ReplacementHandler.h"
@@ -128,17 +128,17 @@ public:
 
     LFUReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits, uint8_t nWayAssociative){
 
-    	/*Inizializzazione dei parametri della classe*/
+    	/*Initialization of class parameters*/
 		n_rows      	 = pow(2, numberOfIndexBits);
 		n_ways      	 = nWayAssociative;
 		index_size  	 = numberOfIndexBits;
 		offset_size 	 = numberOfOffsetBits;
 		last_incremented = -1;
 
-		ass_m = new uint8_t[n_ways * n_rows];			//creazione dinamica matrice associativa [rows][numero di vie]
-    	memset(ass_m, '0', n_rows * nWayAssociative); 	//mette a 0 tutte le celle della matrice associativa
+		ass_m = new uint8_t[n_ways * n_rows];			// dynamic creation of associative matrix [rows] [number of ways]
+    	memset(ass_m, '0', n_rows * nWayAssociative); 	// set all the cells of the associative matrix to 0
 		
-		/* INIZIALIZZAZIONE RANDOMICA
+		/* Randomic Initialization
 
 		for(uint8_t i = 0; i < n_rows; i++){
 			for (uint8_t j = 0; j < n_ways; j++)
@@ -158,7 +158,7 @@ itself, is analyzed and returns the value corresponding to the column in the ass
 	uint8_t findVictim(uint16_t address){
 		
 		uint8_t 	vict 	= 0;								//initialized to 0 because it is the minimum value of the way to choose
-		uint8_t 	min_cnt = 255;								//we choose 2 ^ 8 because bigger 8-bit value can't be had
+		uint8_t 	min_cnt = 255;								//we choose 2^8 - 1 because bigger 8-bit value can't be had
 		uint16_t 	mask 	= pow(2, index_size) - 1;			//mask for the right shift operation
 		uint8_t 	index 	= (address >> offset_size) & mask;	//get the correct value from the algebraic combination of the 16bit register	
 
