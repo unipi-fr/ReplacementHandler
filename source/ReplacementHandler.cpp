@@ -37,17 +37,18 @@ private:
 public:
     PLRUReplacementHandler(uint8_t numberOfIndexBits, uint8_t numberOfOffsetBits, uint8_t nWayAssociative){
 		if(nWayAssociative>32){
-			throw nWayException();
+			throw NWayException();
 		}
         if(numberOfIndexBits > UCHAR_MAX - numberOfOffsetBits){
-            //TODO: gestire errore overflow della somma 
+			//Overflow della somma
+            throw InvalidParametersException();
             return;
         }
         if (numberOfAddressBits <= numberOfIndexBits + numberOfOffsetBits) {
-            //TODO: gestire errore "il numero dei bit offset+index supera i bit dell'indirizzo"
+            //gestire errore "il numero dei bit offset+index supera i bit dell'indirizzo"
+			throw InvalidParametersException();
             //Se  numberOfAdressBits = alpha + beta + gamma --> ne consegue che questo if è sempre verificato dato che 
             //la somma di due qualsiasi delle componenti sarà sempre minore della somma di tutte e tre
-            return;
         }
     
         createMask(numberOfIndexBits, numberOfOffsetBits);
@@ -256,6 +257,7 @@ ReplacementHandler::ReplacementHandler(uint8_t numberOfIndexBits, uint8_t number
 			break;
 		default:
 			//TODO: gestire l'errore
+			throw PolicyNotValidException();
 			break;
 	}
 	
