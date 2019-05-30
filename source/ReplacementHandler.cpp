@@ -48,15 +48,13 @@ public:
 			throw NWayException();
 		}
         if(numberOfIndexBits > UCHAR_MAX - numberOfOffsetBits){
-			//Overflow della somma
+			//Overflow of sum
             throw InvalidParametersException();
             return;
         }
         if (numberOfAddressBits <= numberOfIndexBits + numberOfOffsetBits) {
-            //gestire errore "il numero dei bit offset+index supera i bit dell'indirizzo"
+            //Handling error: the number of bits of offest+index exceed the bits of entire adress
 			throw InvalidParametersException();
-            //Se  numberOfAdressBits = alpha + beta + gamma --> ne consegue che questo if è sempre verificato dato che 
-            //la somma di due qualsiasi delle componenti sarà sempre minore della somma di tutte e tre
         }
     
         createMask(numberOfIndexBits, numberOfOffsetBits);
@@ -93,22 +91,24 @@ public:
         
         int i = 0;
         uint8_t cc = cacheColumn;
-        
+        //cycling the counters bits
         for(uint8_t n = _nWayAssociative/2; n > 0; n /= 2){
-            
+            //check where the cache it's related to the first or second half
             if(cc >= n) 
             {
-                //E' un 1
-                counter |= (1u << i); // Setto il bit corrispondente
-                i += n;
-                cc -= n;
+                //if second half
+                counter |= (1u << i); // set to 1 the corresponding bit of the counter related that half
+                i += n;	// set i pointing next bit to be checked (corresponding the bit of the second half)
+                cc -= n; //update cache column for the next iteration
             } else {
-                //E' uno 0
-                counter &= ~(1u << i); // Azzero il bit corrispondente
-                i += 1;
+                //if second half
+                counter &= ~(1u << i); // set to 1 the corresponding bit of the counter related that half
+                i += 1; // set i pointing next bit to be checked (corresponding the bit of the second half)
+                // cache column it's arledy updated for the next iteration
             }
                
         }
+		//updating corresponding counter
 		_dataStructure[index] = counter;
     }
 
