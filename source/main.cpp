@@ -7,7 +7,7 @@ using namespace std;
 void test_PLRU(){
 	try
 	{
-		ReplacementHandler* h = new ReplacementHandler ((unsigned char)3,(unsigned char)1,(unsigned char)17,PLRU);
+		ReplacementHandler* h = new ReplacementHandler ((unsigned char)3,(unsigned char)1,(unsigned char)17,PLRU_RH);
 		unsigned char a;
 		h->updateStatistics(12,3);
 		h->updateStatistics(12,2);
@@ -23,7 +23,7 @@ void test_PLRU(){
 
 
 void test_LFU(){
-	ReplacementHandler* h = new ReplacementHandler (3,1,4,LFU);
+	ReplacementHandler* h = new ReplacementHandler (3,1,4,LFU_RH);
     unsigned char a;
     a = h->findVictim(12);
     cout << endl;
@@ -32,7 +32,7 @@ void test_LFU(){
 }
 
 void test_RND(){
-	ReplacementHandler* h = new ReplacementHandler (3,1,4,RND);
+	ReplacementHandler* h = new ReplacementHandler (3,1,4,RND_RH);
     unsigned char a;
     a = h->findVictim(12);
     cout << endl;

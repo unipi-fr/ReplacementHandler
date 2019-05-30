@@ -8,7 +8,7 @@
 #define numberOfAddressBits 16 
 
 
-enum PoliciesOffered { PLRU, LFU, RND };
+enum PoliciesOffered { PLRU_RH, LFU_RH, RND_RH };
 
 class ReplacementHandler : public IReplacementPolicy {
 public:

@@ -234,13 +234,13 @@ ReplacementHandler::ReplacementHandler(uint8_t numberOfIndexBits, uint8_t number
 	_policy = policy;
 
 	switch (policy){
-		case PLRU:
+		case PLRU_RH:
 			_policyAdopted = new PLRUReplacementHandler(numberOfIndexBits,numberOfOffsetBits,nWayAssociative);
 			break;
-		case LFU:
+		case LFU_RH:
 			_policyAdopted = new LFUReplacementHandler(numberOfIndexBits,numberOfOffsetBits,nWayAssociative);
 			break;
-		case RND:
+		case RND_RH:
 			_policyAdopted = new RNDReplacementHandler(numberOfIndexBits,numberOfOffsetBits,nWayAssociative);
 			break;
 		default:
